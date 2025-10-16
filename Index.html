@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ansh Digital Portfolio</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  overflow-x: hidden;
+  background: linear-gradient(-45deg, #f0e4d7, #ffe4b5, #ffdd99, #ffe4b5);
+  background-size: 400% 400%;
+  animation: gradientBG 12s ease infinite;
+  position: relative;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  color: #333;
+  transition: all 0.5s ease;
+}
+
+body.night {
+  background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1a1a2e);
+  color: #eee;
+}
+
+@keyframes gradientBG {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+h1 { color:#ff6600; margin-top:25px; font-size:32px; text-shadow:2px 2px 8px #fff; }
+body.night h1 { color:#00ffff; text-shadow:2px 2px 8px #000; }
+
+h2 { color:#ff6600; font-size:26px; margin-top:15px; }
+body.night h2 { color:#00ffff; }
+
+.card {
+  background: rgba(255,255,255,0.9);
+  margin:25px auto;
+  padding:25px 20px 20px 20px;
+  border-radius:18px;
+  width:85%;
+  max-width:500px;
+  box-shadow:0px 6px 20px rgba(255,102,0,0.3);
+  backdrop-filter: blur(4px);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s ease, box-shadow 0.5s ease, background 0.5s ease;
+}
+body.night .card {
+  background: rgba(0,0,0,0.8);
+  box-shadow:0px 6px 20px rgba(0,255,255,0.3);
+}
+
+.card:hover { transform: translateY(-10px); box-shadow:0px 12px 30px rgba(255,102,0,0.5); }
+body.night .card:hover { box-shadow:0px 12px 30px rgba(0,255,255,0.5); }
+
+p { font-size:18px; line-height:1.6; margin-top:10px; color:#333; }
+body.night p { color:#eee; }
+
+a { color:#ff6600; text-decoration:none; font-weight:bold; }
+a:hover { color:#ff00ff; }
+body.night a { color:#00ffff; }
+body.night a:hover { color:#ff33ff; }
+
+.icon-btn { display:inline-flex; align-items:center; justify-content:center; margin:10px; padding:12px 20px; border-radius:50px; background:#ff6600; color:#fff; font-weight:bold; text-decoration:none; transition:0.3s; position:relative; overflow:hidden; font-size:16px; }
+.icon-btn i { margin-right:8px; }
+.icon-btn::after { content:""; position:absolute; width:100%; height:100%; top:0; left:-100%; background: rgba(255,255,255,0.3); transition: all 0.5s; }
+.icon-btn:hover::after { left:0; }
+.icon-btn:hover { background:#ff00ff; transform: scale(1.1); box-shadow:0 0 15px #ff00ff; }
+body.night .icon-btn { background:#00ffff; color:#000; }
+body.night .icon-btn:hover { background:#ff33ff; box-shadow:0 0 15px #ff33ff; }
+
+footer { margin-top:60px; color:#ff6600; font-size:14px; text-shadow:1px 1px 4px #fff; }
+body.night footer { color:#00ffff; text-shadow:1px 1px 4px #000; }
+
+#toggleBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background:#ff00ff;
+  color:#fff;
+  border:none;
+  border-radius:50px;
+  padding:10px 20px;
+  font-size:16px;
+  cursor:pointer;
+  z-index:999;
+  transition: 0.3s;
+}
+#toggleBtn:hover { background:#ff33ff; }
+
+canvas {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  border-radius:18px;
+}
+.card-content { position:relative; z-index:1; color:#333; }
+body.night .card-content { color:#eee; }
+</style>
+</head>
+<body>
+
+<button id="toggleBtn">🌙 Night Mode</button>
+
+<h1>🙏 श्री गणेशाय नमः 🙏</h1>
+
+<!-- Welcome Card -->
+<div class="card" style="position:relative;">
+  <canvas id="welcomeCanvas"></canvas>
+  <div class="card-content">
+    <h2>🌐 Welcome to Ansh Digital Web</h2>
+    <p>This is my first stylish & interactive web page created using Acode App!</p>
+    <a class="icon-btn" href="https://instagram.com/rdx_ansh_actor" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+    <a class="icon-btn" href="https://youtube.com/@ansh_chakravarti_11?si=5TouoxmB4yY0BC_t" target="_blank"><i class="fab fa-youtube"></i>YouTube</a>
+  </div>
+</div>
+
+<!-- Bio Card -->
+<div class="card" style="height:320px; position:relative;">
+  <canvas id="bioCanvas"></canvas>
+  <div class="card-content">
+    <h2>💫 My Bio</h2>
+    <p>
+      नमस्ते 🙏<br>
+      My self <b>Ansh Chakravarti</b>.<br>
+      I live in <b>India (Bareilly, U.P)</b>.<br>
+      I am an Engineering student and also a Website Developer.<br>
+      My village name is <b>Ahladpur</b>.<br>
+      I have <b>Skills</b>.<br>
+    </p>
+  </div>
+</div>
+
+<!-- Contact Info -->
+<div class="card">
+  <h2>📩 Contact Me</h2>
+  <p>My Gmail: <b>anshchakravarti23@gmail.com</b></p>
+</div>
+
+<footer>
+© 2025 Ansh Digital Page | Designed with ❤️ by Ansh Chakravarti
+</footer>
+
+<script>
+// Day/Night Mode Toggle
+const toggleBtn = document.getElementById('toggleBtn');
+toggleBtn.addEventListener('click', ()=>{
+  document.body.classList.toggle('night');
+  toggleBtn.textContent = document.body.classList.contains('night') ? "☀️ Day Mode" : "🌙 Night Mode";
+});
+
+// Function for Independent Canvas Animation
+function createParticles(canvasId, colorDay, colorNight) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+
+  let particles = [];
+  for(let i=0;i<50;i++){
+    particles.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      vx: (Math.random()-0.5)*0.5,
+      vy: (Math.random()-0.5)*0.5,
+      radius: Math.random()*3+1
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        let dx = particles[i].x - particles[j].x;
+        let dy = particles[i].y - particles[j].y;
+        let dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 120){
+          ctx.strokeStyle = document.body.classList.contains('night') ? 'rgba(0,255,255,'+(1-dist/120)+')' : 'rgba(255,102,0,'+(1-dist/120)+')';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    particles.forEach(p=>{
+      p.x += p.vx;
+      p.y += p.vy;
+      if(p.x<0 || p.x>canvas.width) p.vx*=-1;
+      if(p.y<0 || p.y>canvas.height) p.vy*=-1;
+      ctx.fillStyle = document.body.classList.contains('night') ? colorNight : colorDay;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  window.addEventListener('resize',()=>{
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  });
+}
+
+// Initialize Animations
+createParticles('welcomeCanvas','rgba(255,102,0,1)','rgba(0,255,255,1)');
+createParticles('bioCanvas','rgba(0,255,255,1)','rgba(0,255,255,1)');
+</script>
+
+</body>
+  </html>
