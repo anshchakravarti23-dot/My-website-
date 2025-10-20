@@ -1,1 +1,192 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>🐍 Python 30 Days Course — 3D Space Edition</title>
+<style>
+  :root{
+    --bg1:#03040a; --bg2:#00121a;
+    --accent:#00ffcc; --card-bg:rgba(255,255,255,0.04);
+    --code-bg:rgba(0,0,0,0.65);
+  }
+  html,body{
+    height:100%;margin:0;padding:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;
+    background:radial-gradient(ellipse at center,var(--bg2)0%,var(--bg1)100%);
+    color:#eafafa;overflow-y:auto;
+  }
+  header{text-align:center;padding:28px 16px 8px;}
+  h1{margin:0;font-size:clamp(1.6rem,2.6vw,2.4rem);color:var(--accent);
+      text-shadow:0 0 18px rgba(0,255,255,0.12);}
+  p.lead{margin:8px 0 0;color:rgba(234,250,250,0.75);font-size:0.95rem;}
+  main{max-width:overflow hidden;margin:1px auto;padding:0 16px 6px;}
 
+  /* Day card — remove permanent border */
+  .day{
+    background:var(--card-bg);
+    border-radius:1px;
+    margin:1px 0;
+    box-shadow:0 1px 7px rgba(0,0,0,0.3);
+    overflow:hidden;
+  }
+  .day-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:5px 12px;cursor:pointer;user-select:none;font-weight:20;
+    font-size:1.rem;transition:background .2s,transform .14s;
+  }
+  .day-header:hover{background:rgba(0,255,204,0.05);transform:scale(1.01);}
+  .day-title{display:flex;gap:12px;align-items:center;}
+  .day-num{
+    min-width:12px;height:12px;display:inline-grid;place-items:center;
+    border-radius:6px;background:rgba(0,255,204,0.06);
+    color:var(--accent);font-weight:800;
+  }
+  .icon{font-size:1.1rem;color:var(--accent);transition:transform .18s;}
+
+  /* Toggle animation & border only when open */
+  .day-content{
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.18s ease-out;
+    overflow:hidden;
+    padding:0 16px;
+    border-left:0; /* default no border */
+  }
+  .day-content.open{
+    transform: scaleY(1);
+    padding:0 16px;
+    border-left:1px solid rgba(0,255,204,0.18); /* border only when open */
+  }
+
+  .day-body{padding:2px 0 11px;color:#dff;line-height:1.55;font-size:0.95rem;}
+  .label{font-weight:700;color:#cff;margin:6px 0 4px;display:block;}
+
+  pre{
+    position:relative;margin:8px 0 0;background:var(--code-bg);color:var(--accent);
+    padding:10px;border-radius:6px;overflow:auto;font-family:"Roboto Mono",monospace;
+    font-size:0.92rem;line-height:1.45;
+  }
+  .copy-btn{
+    position:absolute;top:6px;right:8px;font-size:0.8rem;background:#00ffcc20;
+    color:#0ff;border:1px solid #00ffcc40;border-radius:6px;padding:3px 6px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#00ffcc40;}
+
+  /* Space stars */
+  .space-layer{pointer-events:none;position:fixed;inset:0;z-index:-1;}
+  .star{
+    position:absolute;background:#fff;border-radius:50%;opacity:.8;
+    filter:drop-shadow(0 0 6px rgba(0,255,204,.08));
+    animation:twinkle 5s ease-in-out infinite, fly 15s linear infinite;
+  }
+  @keyframes twinkle{
+    0%{opacity:.1;transform:translateZ(-200px)scale(.6);}
+    50%{opacity:1;transform:translateZ(200px)scale(1.1);}
+    100%{opacity:.1;transform:translateZ(-200px)scale(.6);}
+  }
+  @keyframes fly{
+    0%{transform: translateY(0) translateX(0);}
+    100%{transform: translateY(-100vh) translateX(50vw);}
+  }
+  @media(max-width:640px){pre{font-size:.85rem;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🐍 Python 30 Days Course — 3D Space Theme</h1>
+  <p class="lead">हर Day पर क्लिक करो 👉 Definition + Uses + Example + Copy</p>
+</header>
+<main id="main"></main>
+<div class="space-layer" id="space"></div>
+
+<script>
+/* ==== Stars ==== */
+const space=document.getElementById('space');
+for(let i=0;i<250;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  const size=Math.random()*2.6+0.6;
+  s.style.width=size+'px';s.style.height=size+'px';
+  s.style.top=Math.random()*100+'vh';
+  s.style.left=Math.random()*100+'vw';
+  s.style.animationDuration=(Math.random()*6+4).toFixed(2)+'s';
+  s.style.animationDelay=(Math.random()*-1).toFixed(0)+'s';
+  space.appendChild(s);
+}
+
+/* ==== Days Data 1–30 ==== */
+const days=[
+  {day:1,title:"Introduction to Python",definition:"Python एक उच्च-स्तरीय, इंटरप्रेटेड और general-purpose भाषा है। इसकी syntax सरल और readable है।",uses:"Web, Data, ML, Automation",example:`print("Hello, World!")`},
+  {day:2,title:"History of Python",definition:"Guido van Rossum ने 1989 में बनाया, पहला release 1991 में।",uses:"Readable code, Rapid Dev",example:`print("Python since 1991")`},
+  {day:3,title:"IDLE — Python IDE",definition:"IDLE Python का default lightweight IDE है।",uses:"Beginners के लिए अच्छा",example:`print("Hello from IDLE!")`},
+  {day:4,title:"Running Python Scripts",definition:"Python files (.py) को terminal या IDE से run किया जाता है।",uses:"Automation",example:`# demo.py\ndef greet():\n print("Hi")\ngreet()`},
+  {day:5,title:"Syntax & Indentation",definition:"Code block indentation से तय होते हैं।",uses:"Readability",example:`if 5>2:\n print("Five greater")`},
+  {day:6,title:"Variables & Data Types",definition:"Variables data store करते हैं।",uses:"Data storage",example:`x=10;name="Ansh"\nprint(x,name)`},
+  {day:7,title:"Input & Output",definition:"input() user से data लेता है, print() दिखाता है।",uses:"User interaction",example:`n=input("Name:")\nprint("Hi",n)`},
+  {day:8,title:"Operators",definition:"Arithmetic, Logical, Comparison operators।",uses:"Calculation",example:`a,b=5,3\nprint(a+b,a>b)`},
+  {day:9,title:"Conditional Statements",definition:"if, elif, else decision making।",uses:"Logic",example:`age=18\nif age>=18:print("Adult")`},
+  {day:10,title:"Loops",definition:"for और while repetition के लिए।",uses:"Iteration",example:`for i in range(3):print(i)`},
+  {day:11,title:"Functions",definition:"Reusable code blocks।",uses:"Code reuse",example:`def greet(n):print("Hi",n)\ngreet("Ansh")`},
+  {day:12,title:"Arguments & Return",definition:"Input और Output के लिए arguments/return।",uses:"Dynamic logic",example:`def add(a,b):return a+b\nprint(add(2,3))`},
+  {day:13,title:"Lists",definition:"Mutable ordered data।",uses:"Collection",example:`fruits=["apple","mango"]\nfruits.append("grape")`},
+  {day:14,title:"Tuples",definition:"Immutable ordered data।",uses:"Fixed data",example:`nums=(1,2,3)\nprint(nums[1])`},
+  {day:15,title:"Sets",definition:"Unordered unique data।",uses:"Unique values",example:`nums={1,2,2,3}\nprint(nums)`},
+  {day:16,title:"Dictionaries",definition:"Key-value pairs।",uses:"Mapping data",example:`info={"name":"Ansh","age":17}\nprint(info["name"])`},
+  {day:17,title:"String Methods",definition:"len(), upper(), lower(), replace() आदि।",uses:"Text handling",example:`msg="hello".upper()\nprint(msg)`},
+  {day:18,title:"List Methods",definition:"append(), remove(), sort() आदि।",uses:"Manage lists",example:`a=[3,1,2];a.sort();print(a)`},
+  {day:19,title:"Loops with Lists",definition:"for loop से iterate करें।",uses:"Traverse items",example:`for x in ["a","b"]:print(x)`},
+  {day:20,title:"Nested Loops",definition:"Loop के अंदर Loop।",uses:"Patterns",example:`for i in range(3):\n for j in range(2):\n  print(i,j)`},
+  {day:21,title:"String Formatting",definition:"f-string या format() से output सजाएँ।",uses:"Readable prints",example:`name="Ansh"\nprint(f"Hello {name}")`},
+  {day:22,title:"File Handling",definition:"open(), read(), write() से files पर काम।",uses:"Data storage",example:`f=open("a.txt","w");f.write("Hi");f.close()`},
+  {day:23,title:"Exception Handling",definition:"try-except से errors handle करें।",uses:"Safe code",example:`try:\n x=1/0\nexcept:\n print("Error!")`},
+  {day:24,title:"Modules & Packages",definition:"import से दूसरे files या modules use।",uses:"Code reuse",example:`import math\nprint(math.sqrt(16))`},
+  {day:25,title:"Classes & Objects",definition:"OOP concept Python में।",uses:"Modeling",example:`class Car:\n def start(self):print("Go!")\nc=Car();c.start()`},
+  {day:26,title:"Inheritance",definition:"Parent class से properties लेना।",uses:"Reuse & extend",example:`class A:pass\nclass B(A):pass`},
+  {day:27,title:"Polymorphism",definition:"Same name अलग behavior।",uses:"Flexible OOP",example:`print(len("abc"),len([1,2]))`},
+  {day:28,title:"Encapsulation",definition:"Data को protect करने की तकनीक।",uses:"Data hiding",example:`class Test:\n def __init__(s):s.__a=5`},
+  {day:29,title:"Lambda & Map",definition:"Anonymous function और mapping।",uses:"Short ops",example:`nums=[1,2,3]\nsq=list(map(lambda x:x*x,nums))`},
+  {day:30,title:"Project & Revision",definition:"Mini project बनाओ और पूरे concept दोहराओ।",uses:"Practice",example:`print("Course Completed 🎉")`}
+];
+
+/* ==== Render ==== */
+const main=document.getElementById('main');
+days.forEach(d=>{
+  const card=document.createElement('article'); card.className='day';
+  const header=document.createElement('div'); header.className='day-header';
+  header.innerHTML=`<div class="day-title"><div class="day-num">${d.day}</div><div>${d.title}</div></div><div class="icon">➕</div>`;
+  const content=document.createElement('div'); content.className='day-content';
+  const body=document.createElement('div'); body.className='day-body';
+  body.innerHTML=`<span class="label">Definition:</span><div>${d.definition}</div>
+  <span class="label">Uses:</span><div style="white-space:pre-wrap">${d.uses}</div>
+  <span class="label">Example:</span>
+  <pre><button class="copy-btn">📋 Copy</button>${d.example}</pre>`;  
+  content.appendChild(body);
+
+  header.addEventListener('click',()=>{
+    const icon=header.querySelector('.icon');
+    const isOpen=content.classList.contains('open');
+    document.querySelectorAll('.day-content').forEach(c=>c.classList.remove('open'));
+    document.querySelectorAll('.icon').forEach(i=>i.textContent='➕');
+    if(!isOpen){
+      content.classList.add('open');
+      icon.textContent='➖';
+      setTimeout(()=>header.scrollIntoView({behavior:'smooth',block:'center'}),180);
+    }
+  });
+
+  card.appendChild(header); card.appendChild(content);
+  main.appendChild(card);
+});
+
+/* ==== Copy Buttons ==== */
+main.addEventListener('click',e=>{
+  if(e.target.classList.contains('copy-btn')){
+    const code=e.target.parentElement.textContent.replace('📋 Copy','').trim();
+    navigator.clipboard.writeText(code);
+    e.target.textContent='✅ Copied';
+    setTimeout(()=>e.target.textContent='📋 Copy',1500);
+  }
+});
+</script>
+</body>
+</html>
